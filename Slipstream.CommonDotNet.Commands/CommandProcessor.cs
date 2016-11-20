@@ -53,6 +53,12 @@ namespace Slipstream.CommonDotNet.Commands
             return new CommandProcessorSuccessResult<TSuccessResult>(await ProcessAsync(command));
         }
 
+        public async Task<CommandProcessorSuccessResult> ProcessResultAsync<TCommand>(ISuccessResult<TCommand> command)
+            where TCommand : IAsyncCommand
+        {
+            return new CommandProcessorSuccessResult(await ProcessAsync(command));
+        }
+
         public async Task<TSuccessResult> ProcessSuccessAsync<TCommand, TSuccessResult>(ISuccessResult<TCommand, TSuccessResult> command)
             where TCommand : IAsyncCommand
             where TSuccessResult : IResult
@@ -62,6 +68,21 @@ namespace Slipstream.CommonDotNet.Commands
             if (result is TSuccessResult)
             {
                 return (TSuccessResult)result;
+            }
+            else
+            {
+                throw (Exception)result;
+            }
+        }
+
+        public async Task ProcessSuccessAsync<TCommand>(ISuccessResult<TCommand> command)
+            where TCommand : IAsyncCommand
+        {
+            var result = await ProcessAsync(command);
+
+            if (result is Unit)
+            {
+                // success
             }
             else
             {

@@ -1,0 +1,7 @@
+﻿ISuccessResult<TCommand, Unit> be used for void... and then .When(o => o.Success()).Return(() => ...)
+
+Result.Empty returns Unit or call it Empty
+
+Result<TResult> to be used when wanting to return int Result.From(1)
+
+Maybe just return object?

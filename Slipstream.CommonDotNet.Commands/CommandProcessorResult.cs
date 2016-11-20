@@ -7,6 +7,22 @@ using Slipstream.CommonDotNet.Commands.Results;
 
 namespace Slipstream.CommonDotNet.Commands
 {
+
+    public class CommandProcessorSuccessResult
+    {
+        public bool Success { get; }
+        public bool NotSuccess => !Success;
+
+        public IResult Result { get; }
+
+
+        public CommandProcessorSuccessResult(IResult result)
+        {
+            Result = result;
+            Success = result is Unit;
+        }
+    }
+
     public class CommandProcessorSuccessResult<TSuccessResult>
         where TSuccessResult : IResult
     {
@@ -36,6 +52,5 @@ namespace Slipstream.CommonDotNet.Commands
             Result = result;
             Success = result is TSuccessResult;
         }
-
     }
 }
